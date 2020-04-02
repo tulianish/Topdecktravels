@@ -14,7 +14,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-const paymentRoute = require('./routes/payment');
+const paymentRoute = require('./Routes/payment');
 
 app.use('/payment',paymentRoute);
 
