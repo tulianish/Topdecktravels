@@ -20,4 +20,4 @@ mongoose.connect('mongodb://3.88.249.85:27017/TourismCanada' ,
 () => console.log("Mongo connected")
 );
 
-app.listen(3000);
+app.listen(3004);
