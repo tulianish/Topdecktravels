@@ -176,7 +176,7 @@ body {
               </div>
               <div class="card-answer">
                   <label for="inputEmail">Answer</label>
-                <input type="text" id="answer" class="form-control" placeholder="Your Answer" required>
+                <input type="password" id="answer" class="form-control" placeholder="Your Answer" required>
 
               </div>
               <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" id="verify">Verify</button>
@@ -224,9 +224,10 @@ $('#loginbutton').click( function () {
         $('#before').hide();
         $('#after').show();
 
-        var answer = $('#answer').val();
+        
 
         $('#verify').click(function () {
+            var answer = $('#answer').val();
             var auth = $.ajax({
                 url: 'http://topdeckTravelsLoadBalancer-49374090.us-east-1.elb.amazonaws.com:3001/users/validateQuestion',
                 data: {'email': email, 'securityQuestion': question, 'answer': answer},
