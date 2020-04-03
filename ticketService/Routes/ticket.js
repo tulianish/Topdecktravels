@@ -76,7 +76,7 @@ router.get('/:ticketId',async(req,res)=>{
         html: 'Dear Customer,<br>Thank you for booking with Topdeck Travels.<br><br>Please find attached a copy of your ticket.<br>Please quote this booking reference for any further support.<br><br>Happy Travelling!!<br><br><br>Topdeck Travels Support<br>1315 Dresden Row<br>Halifax NS B3J 2K9<br>topdecktravels5409+support@gmail.com<br>www.topdecktravels.com/support',
         attachments:[{
             filename: 'Ticket'+search._id+'.pdf',  
-            path: 'Ticket.pdf',                                       
+            path: 'Ticket'+search._id+'.pdf',                                       
             contentType: 'application/pdf'
         }]
         };
