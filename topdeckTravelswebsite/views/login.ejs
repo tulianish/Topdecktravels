@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style type="text/css">
+        :root {
+  --input-padding-x: 1.5rem;
+  --input-padding-y: .75rem;
+}
+
+body {
+  background: #007bff;
+  background: linear-gradient(to right, #0062E6, #33AEFF);
+}
+
+.card-signin {
+  border: 0;
+  border-radius: 1rem;
+  box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+}
+
+.card-signin .card-title {
+  margin-bottom: 2rem;
+  font-weight: 300;
+  font-size: 1.5rem;
+}
+
+.card-signin .card-body {
+  padding: 2rem;
+}
+
+.form-signin {
+  width: 100%;
+}
+
+.form-signin .btn {
+  font-size: 80%;
+  border-radius: 5rem;
+  letter-spacing: .1rem;
+  font-weight: bold;
+  padding: 1rem;
+  transition: all 0.2s;
+}
+
+.form-label-group {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.form-label-group input {
+  height: auto;
+  border-radius: 2rem;
+}
+
+.form-label-group>input,
+.form-label-group>label {
+  padding: var(--input-padding-y) var(--input-padding-x);
+}
+
+.form-label-group>label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  /* Override default `<label>` margin */
+  line-height: 1.5;
+  color: #495057;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+  transition: all .1s ease-in-out;
+}
+
+.form-label-group input::-webkit-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input:-ms-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::-ms-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::-moz-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::placeholder {
+  color: transparent;
+}
+
+.form-label-group input:not(:placeholder-shown) {
+  padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));
+  padding-bottom: calc(var(--input-padding-y) / 3);
+}
+
+.form-label-group input:not(:placeholder-shown)~label {
+  padding-top: calc(var(--input-padding-y) / 3);
+  padding-bottom: calc(var(--input-padding-y) / 3);
+  font-size: 12px;
+  color: #777;
+}
+
+/* Fallback for Edge
+-------------------------------------------------- */
+
+@supports (-ms-ime-align: auto) {
+  .form-label-group>label {
+    display: none;
+  }
+  .form-label-group input::-ms-input-placeholder {
+    color: #777;
+  }
+}
+
+/* Fallback for IE
+-------------------------------------------------- */
+
+@media all and (-ms-high-contrast: none),
+(-ms-high-contrast: active) {
+  .form-label-group>label {
+    display: none;
+  }
+  .form-label-group input:-ms-input-placeholder {
+    color: #777;
+  }
+}
+
+    </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<!--    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="container" >
+    <div class="row">
+      <div class="col-sm-10 col-md-7 col-lg-8 mx-auto">
+        <div class="card card-signin my-5" >
+          <div class="card-body" >
+            <h5 class="card-title text-center">Sign In</h5>
+            <div class="card-body" id="before">
+              <div class="form-label-group">
+                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required >
+                <label for="inputEmail">Email address</label>
+              </div>
+
+              <div class="form-label-group">
+                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                <label for="inputPassword">Password</label>
+              </div>
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" id="loginbutton">Sign in</button>
+              <hr class="my-4">
+<!--              <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i> Sign in with Google</button>-->
+<!--              <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i class="fab fa-facebook-f mr-2"></i> Sign in with Facebook</button>-->
+               <div class="container signup">
+                 <p>Don't have an account? <a href="/registration">Register here</a>.</p>
+            </div>
+            </div>
+
+<!--              after sign in-->
+<!--              <form class="authentication" id="after" >-->
+              <div class="card-body" id="after">
+              <div class="card-question" >
+                  <b><p id="securityQuestion"></p></b>
+              </div>
+              <div class="card-answer">
+                  <label for="inputEmail">Answer</label>
+                <input type="text" id="answer" class="form-control" placeholder="Your Answer" required>
+
+              </div>
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" id="verify">Verify</button>
+            </div>
+
+              <button onclick=window.location.href="/"> HOME</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+$('#after').hide();
+$('#loginbutton').click( function () {
+     $('#before').hide();
+    var email = $('#inputEmail').val();
+    var password = $('#inputPassword').val();
+    var resp = $.ajax({
+        url: 'http://topdeckTravelsLoadBalancer-49374090.us-east-1.elb.amazonaws.com:3001/users/authenticate',
+        data: {'email': email, 'password': password},
+        dataType: 'json',
+        type: 'POST',
+        async: false,
+        beforeSend: function (x) {
+            if (x && x.overrideMimeType) {
+                x.overrideMimeType("application/j-son;charset=UTF-8");
+            }
+        },
+        success: function (response) {
+        },
+        error: function (error) {
+        }
+    });
+
+
+    console.log(resp.responseJSON.email);
+    if (resp.responseJSON.length!=0) {
+         var question = resp.responseJSON.securityQuestion;
+         document.getElementById('securityQuestion').innerHTML = question;
+        $('#before').hide();
+        $('#after').show();
+
+        var answer = $('#answer').val();
+
+        $('#verify').click(function () {
+            var auth = $.ajax({
+                url: 'http://topdeckTravelsLoadBalancer-49374090.us-east-1.elb.amazonaws.com:3001/users/validateQuestion',
+                data: {'email': email, 'securityQuestion': question, 'answer': answer},
+                dataType: 'json',
+                type: 'POST',
+                async: false,
+                beforeSend: function (x) {
+                    if (x && x.overrideMimeType) {
+                        x.overrideMimeType("application/j-son;charset=UTF-8");
+                    }
+                },
+                success: function (response) {
+
+                },
+                error: function (response) {
+                }
+            });
+
+            console.log(resp.responseJSON.email);
+
+
+            if (auth.responseJSON.length!=0) {
+                location.replace("/?email="+email);
+            } else {
+                console.log("inside validate error")
+            }
+        });
+    } else {
+        console.log("inside error")
+    }
+});
+</script>
+</body>
+</html>

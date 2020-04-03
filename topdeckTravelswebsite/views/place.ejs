@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--    <meta charset="UTF-8">-->
+<!--    <meta http-equiv="Content-Security-Policy" content="img-src 'self' data:; default-src 'self' http://:8084/mypp/">-->
+
+    <title>Place</title>
+     <meta charset="utf-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+           /* Remove the navbar's default margin-bottom and rounded borders */
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+          /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: content-box;
+        /*padding: 15px;*/
+      }
+      .row.content {height:auto;}
+    }
+      #search{
+          width: 100%;
+          height: 50px;
+      }
+   #book{
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 20%;
+  opacity: 0.9;
+}
+        .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+      min-height: 60px;
+      height: 80px;
+    }
+    .navbar-brand {
+  padding: 0 15px;
+  height: 80px;
+      font-variant-position: normal;
+  line-height: 80px;
+      font-size: 40px;
+}
+    #appName{
+      color: ghostwhite;
+    }
+    .navbar-nav{
+      border-top: 10px;
+      font-size: 20px;
+      padding: 10px;
+    }
+    .navbar-right{
+       border-top: 10px;
+      font-size: 20px;
+      padding: 10px;
+    }
+     .list-unstyled{
+      font-size: 20px;
+    }
+        .page-footer{
+      min-height:100px;
+    }
+    #downloadapp{
+      padding-top: 10px;
+      height: 70px;
+      padding-left: 57em;
+
+    }
+
+    </style>
+</head>
+<body >
+
+
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Topdeck Travels</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="/">Home</a></li>
+    </ul>
+  <ul class="nav navbar-right">
+    <li id="Login"><a href="/login">Login</a></li>
+    <li id="logout"><a href="/">Logout</a></li>
+  </ul>
+  </div>
+</nav>
+
+<div class="container" align="center">
+    <br><br>
+    <img src="" class="square" alt="Cinque Terre" width="500" height="300" id="image">
+    <h2 id="name"></h2>
+    <p id="address"></p>
+    <p id="open"></p>
+    <button id="book">BOOK TICKET</button><br>
+    <p id="error">**In order to book, please login first**</p>
+</div>
+
+
+<!--CALL TO FILL UP DETAILS----------------------------------------------------------------------->
+
+<script>
+    $('#error').hide();
+    function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+    }
+    var name = getUrlVars()["name"];
+    var placeName = name.replace(/%20/g, ' ');
+    var image_place = name.replace(/%20/g,'+');
+    console.log(image_place);
+    document.getElementById("image").src = "https://cloud5409topdeck.s3.amazonaws.com/photo/"+image_place+".jpg"
+
+
+  var resp = $.ajax({
+                    url: 'http://topdeckTravelsLoadBalancer-49374090.us-east-1.elb.amazonaws.com:3004/places/byName/'+placeName,
+                    data: {},
+                    dataType: 'json',
+                    type: 'GET',
+                    async: false,
+                    beforeSend: function (x) {
+                        if (x && x.overrideMimeType) {
+                            x.overrideMimeType("application/j-son;charset=UTF-8");
+                        }
+                    },
+                });
+  // console.log(resp.responseJSON);
+        resp = resp.responseJSON;
+        console.log(resp);
+        document.getElementById('name').innerHTML = resp[0].name;
+        document.getElementById('image').innerHTML = resp[0].image_url;
+        document.getElementById('address').innerHTML = resp[0].formatted_address;
+  if(resp[0].open_status=="true") {
+      document.getElementById('open').innerHTML = "OPEN NOW";
+  }
+  else{
+      document.getElementById('open').innerHTML = "CLOSED CURRENTLY";
+  }
+</script>
+
+
+
+<!--BOOK TICKET BUTTON----------------------------------------------------------------------->
+
+<script>
+    function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+    }
+    var name = getUrlVars()["name"];
+    var placeName = name.replace(/%20/g, ' ');
+    var email = getUrlVars()["email"];
+
+    $('#book').click(function () {
+        if(email=="empty"){
+            $('#error').show();
+        }
+        else {
+
+            window.location = "/book?name=" + placeName + "&email=" + email;
+        }
+
+            });
+
+</script>
+
+
+
+<!--check for login logout------------------------------------------------------------------------>
+
+<script>
+  function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+
+   function getUrlParam(parameter, defaultvalue){
+    var urlparameter = defaultvalue;
+    if(window.location.href.indexOf(parameter) > -1){
+        urlparameter = getUrlVars()[parameter];
+        }
+    return urlparameter;
+  }
+    var email = getUrlParam("email","empty");
+   console.log(email);
+  // var resp1 = $.ajax({
+  //                   url: 'http://127.0.0.1:3001/users/current',
+  //                   data: {'email':email},
+  //                   dataType: 'json',
+  //                   type: 'GET',
+  //                   async: false,
+  //                   beforeSend: function (x) {
+  //                       if (x && x.overrideMimeType) {
+  //                           x.overrideMimeType("application/j-son;charset=UTF-8");
+  //                       }
+  //                   },
+  //               });
+
+  if(email!="empty")
+  {
+    $("#Login").hide();
+    $("#logout").show();
+
+  }
+  else {
+      $("#Login").show();
+      $("#logout").hide();
+  }
+
+// onclick logout
+  $('#logout').click( function () {;
+    var resp = $.ajax({
+        url: 'http://topdeckTravelsLoadBalancer-49374090.us-east-1.elb.amazonaws.com:3001/users/logout',
+        data: {'email':email},
+        dataType: 'json',
+        type: 'POST',
+        async: false,
+        beforeSend: function (x) {
+            if (x && x.overrideMimeType) {
+                x.overrideMimeType("application/j-son;charset=UTF-8");
+            }
+        },
+        success: function (response) {
+        },
+        error: function (error) {
+        }
+    });
+  });
+</script>
+
+
+<!--footer-----------------------------------------------------s----------------------------------->
+
+<footer class="page-footer font-small blue pt-4">
+  <a href="https://cloud5409topdeck.s3.amazonaws.com/app-debug.apk" align="center" ><img src="https://cloud5409topdeck.s3.amazonaws.com/photo/download.svg" id="downloadapp" align="center"></a>
+</footer>
+
+<!------------------------------------------------------------------------------------------------>
+
+</body>
+</html>

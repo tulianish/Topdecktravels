@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Home</title>
+<!--  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; connect-src 'self';font-src 'self'; img-src 'self' data: https:; style-src 'self' ; script-src 'self'">-->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+      <style>
+
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+      min-height: 60px;
+      height: 80px;
+    }
+    .navbar-brand {
+  padding: 0 15px;
+  height: 80px;
+      font-variant-position: normal;
+  line-height: 80px;
+      font-size: 40px;
+}
+    .navbar-nav{
+      border-top: 10px;
+      font-size: 20px;
+      padding: 10px;
+    }
+    .navbar-right{
+       border-top: 10px;
+      font-size: 20px;
+      padding: 10px;
+    }
+
+    .page-footer{
+      min-height:100px;
+    }
+    #downloadapp{
+      padding-top: 10px;
+      height: 70px;
+      padding-left: 60em;
+
+    }
+    </style>
+</head>
+<body>
+
+<script>s
+  $("#logout").hide();
+</script>
+
+<!--Navigation bar-->
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Topdeck Travels</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="/">Home</a></li>
+    </ul>
+  <ul class="nav navbar-right">
+    <li id="Login"><a href="/login">Login</a></li>
+    <li id="logout"><a href="/">Logout</a></li>
+  </ul>
+  </div>
+</nav>
+<br><br>
+
+<div class="container">
+    <div class="row" id="contentPanel" ></div>
+</div>
+
+<script>
+    $('.close').on('click', function(e){
+      e.stopPropagation();
+          var $target = $(this).parents('.col-sm-2');
+          $target.hide('slow', function(){ $target.remove(); });
+    });
+</script>
+
+<script>
+    var resp = $.ajax({
+                    url: 'http://topdeckTravelsLoadBalancer-49374090.us-east-1.elb.amazonaws.com:3004/places/',
+                    data: {},
+                    dataType: 'json',
+                    type: 'GET',
+                    async: false,
+                    beforeSend: function (x) {
+                        if (x && x.overrideMimeType) {
+                            x.overrideMimeType("application/j-son;charset=UTF-8");
+                        }
+                    },
+                });
+
+        resp = resp.responseJSON;
+
+        function fun(id) {
+          log.console(res[id].name)
+        }
+          function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+
+   function getUrlParam(parameter, defaultvalue){
+    var urlparameter = defaultvalue;
+    if(window.location.href.indexOf(parameter) > -1){
+        urlparameter = getUrlVars()[parameter];
+        }
+    return urlparameter;
+  }
+    var email = getUrlParam("email","empty");
+   console.log(email);
+        var num=20;
+    for (var i=1;i<=num;i++) {
+        var myCol = $('<div class="col-sm-4 col-md-4 pb-3"></div>');
+        var url =resp[i-1].image_url;
+
+        var id = resp[i-1].name;
+        console.log(id);
+        var myPanel = $('<div class="card card-outline-info" id="'+i+'Panel"><br><div class="card-block"><a href="/place?name='+(resp[i-1].name)+'&email='+(email)+'"><input type="image" src='+url+'  onclick=fun('+id+') class="square" width="250" height="200"></a><div class="card-title"><span><br/><h5>'+resp[i-1].name+'</h5></span><button type="button" class="close" data-target="#'+i+'Panel" data-dismiss="alert"><span class="float-right"><i class="fa fa-remove"></i></span></button></div></div></div>');
+        myPanel.appendTo(myCol);
+        myCol.appendTo('#contentPanel');
+    }
+</script>
+
+<!--check if the user is logged in or not-->
+
+<script>
+  function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+
+   function getUrlParam(parameter, defaultvalue){
+    var urlparameter = defaultvalue;
+    if(window.location.href.indexOf(parameter) > -1){
+        urlparameter = getUrlVars()[parameter];
+        }
+    return urlparameter;
+  }
+    var email = getUrlParam("email","empty");
+   console.log(email);
+  if(email!="empty")
+  {
+    $("#Login").hide();
+    $("#logout").show();
+
+  }
+  else {
+      $("#Login").show();
+      $("#logout").hide();
+  }
+
+// onclick logout
+
+  $('#logout').click( function () {;
+    var resp = $.ajax({
+        url: 'http://topdeckTravelsLoadBalancer-49374090.us-east-1.elb.amazonaws.com:3001/users/logout',
+        data: {'email':email},
+        dataType: 'json',
+        type: 'POST',
+        async: false,
+        beforeSend: function (x) {
+            if (x && x.overrideMimeType) {
+                x.overrideMimeType("application/j-son;charset=UTF-8");
+            }
+        },
+        success: function (response) {
+        },
+        error: function (error) {
+        }
+    });
+  });
+</script>
+
+
+<!--footer---------------------------------------------------------------------------------------->
+
+<footer class="page-footer font-small blue pt-4">
+  <a href="https://cloud5409topdeck.s3.amazonaws.com/app-debug.apk"  align="center" ><img src="https://cloud5409topdeck.s3.amazonaws.com/photo/download.svg" id="downloadapp" align="center"></a>
+</footer>
+
+<!------------------------------------------------------------------------------------------------>
+</body>
+</html>

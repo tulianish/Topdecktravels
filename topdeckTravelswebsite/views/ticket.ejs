@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ticket</title>
+       <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        body {
+  background: url("https://cloud5409topdeck.s3.amazonaws.com/photo/background.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
+}
+        .card-body{
+            background-color: #f1f1f1;
+            max-width: 900px;
+            margin: 0 auto;
+            float: none;
+            margin-bottom: 10px;
+        }
+        .dl-horizontal{
+            width: 60%;
+            font-size: 2em ;
+        }
+
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+      min-height: 60px;
+      height: 80px;
+    }
+    .navbar-brand {
+  padding: 0 15px;
+  height: 80px;
+      font-variant-position: normal;
+  line-height: 80px;
+      font-size: 40px;
+}
+    #appName{
+      color: ghostwhite;
+    }
+    .navbar-nav{
+      border-top: 10px;
+      font-size: 20px;
+      padding: 10px;
+    }
+    .navbar-right{
+       border-top: 10px;
+      font-size: 20px;
+      padding: 10px;
+    }
+    .list-unstyled{
+      font-size: 20px;
+    }
+    .page-footer{
+      min-height:100px;
+    }
+     #set{
+         color: #f1f1f1;
+     }
+        .page-footer{
+      min-height:100px;
+    }
+    #downloadapp{
+      padding-top: 10px;
+      height: 70px;
+      padding-left: 60em;
+
+    }
+    </style>
+
+</head>
+<body>
+
+<!--Navigation Bar----------------------------------------------------------------------------------->
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Topdeck Travels</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="/">Home</a></li>
+    </ul>
+  <ul class="nav navbar-right">
+    <li id="logout"><a href="/">Logout</a></li>
+  </ul>
+  </div>
+</nav>
+
+<!----------------------------------------------------------------------------------------------------->
+<h1 align="center">Booking Confirmed !!</h1>
+
+<div class="container">
+
+    <div class="card-body p-10" align="center">
+      <br>
+        <h1 class="font-weight-light">Ticket</h1>
+        <dl class="dl-horizontal">
+        <dt>Name :</dt>
+        <dd id="name"></dd>
+        <dt>Email :</dt>
+        <dd id="email"></dd>
+        <dt>Travel Date :</dt>
+        <dd id="travel_date"></dd>
+        <dt>Travel Time :</dt>
+        <dd id="time"></dd>
+        <dt>Book Date :</dt>
+        <dd id="book_date"></dd>
+        <dt>From :</dt>
+        <dd id="from"></dd>
+       <dt>TO :</dt>
+        <dd id="to"></dd>
+        <dt>Fare :</dt>
+        <dd id="fare"></dd>
+         <dt>Taxs :</dt>
+        <dd id="tax"></dd>
+         <dt>Total :</dt>
+        <dd id="amount"></dd>
+        </dl><br>
+        <br>
+        <h4>Ticket sent on registered Email ID</h4>
+    </div>
+    <br><br>
+</div>
+<br><p> </p><br>
+<!--logout-------------------------------------------------------------------------------------->
+
+<script>
+  function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+
+   function getUrlParam(parameter, defaultvalue){
+    var urlparameter = defaultvalue;
+    if(window.location.href.indexOf(parameter) > -1){
+        urlparameter = getUrlVars()[parameter];
+        }
+    return urlparameter;
+  }
+    var id = getUrlParam("id","empty");
+console.log(id)
+var ticket = $.ajax({
+        url: 'http://topdeckTravelsLoadBalancer-49374090.us-east-1.elb.amazonaws.com:3005/ticket/'+id,
+        data: {},
+        dataType: 'json',
+        type: 'GET',
+        async: false,
+        beforeSend: function (x) {
+            if (x && x.overrideMimeType) {
+                x.overrideMimeType("application/j-son;charset=UTF-8");
+            }
+        },
+        success: function (response) {
+        },
+        error: function (error) {
+        }
+    });
+
+ticket = ticket.responseJSON;
+console.log(ticket);
+document.getElementById("name").innerHTML=ticket.name;
+document.getElementById("email").innerHTML=ticket.email;
+document.getElementById("travel_date").innerHTML=ticket.travel_date;
+document.getElementById("time").innerHTML=ticket.travel_time;
+document.getElementById("book_date").innerHTML=ticket.booking_date;
+document.getElementById("from").innerHTML=ticket.from_place;
+document.getElementById("to").innerHTML=ticket.to_place;
+document.getElementById("fare").innerHTML="$ "+ticket.fare;
+document.getElementById("tax").innerHTML="$ "+ticket.tax;
+document.getElementById("amount").innerHTML="$ "+ticket.amount;
+  $('#logout').click( function () {;
+    var resp = $.ajax({
+        url: 'http://topdeckTravelsLoadBalancer-49374090.us-east-1.elb.amazonaws.com:3001/users/logout',
+        data: {'email':email},
+        dataType: 'json',
+        type: 'POST',
+        async: false,
+        beforeSend: function (x) {
+            if (x && x.overrideMimeType) {
+                x.overrideMimeType("application/j-son;charset=UTF-8");
+            }
+        },
+        success: function (response) {
+        },
+        error: function (error) {
+        }
+    });
+  });
+</script>
+
+<br><br><br>
+<!--footer----------------------------------------------------------------------------------------------------------------------------------------------->
+<footer class="page-footer font-small blue pt-4">
+  <a href="https://cloud5409topdeck.s3.amazonaws.com/app-debug.apk" align="center" ><img src="https://cloud5409topdeck.s3.amazonaws.com/photo/download.svg" id="downloadapp" align="center"></a>
+</footer>
+<!--the eeeennnndddddd------------------------------------------------------------------------------------------------------------------------------------->
+</body>
+</html>

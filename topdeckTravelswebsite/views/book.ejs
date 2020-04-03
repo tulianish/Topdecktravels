@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+     <style>
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+      min-height: 60px;
+      height: 80px;
+    }
+    .navbar-brand {
+  padding: 0 15px;
+  height: 80px;
+      font-variant-position: normal;
+  line-height: 80px;
+      font-size: 40px;
+}
+    .navbar-nav{
+      border-top: 10px;
+      font-size: 20px;
+      padding: 10px;
+    }
+    .navbar-right{
+       border-top: 10px;
+      font-size: 20px;
+      padding: 10px;
+    }
+
+         .page-footer{
+      min-height:100px;
+    }
+    #downloadapp{
+      padding-top: 30px;
+      height: 70px;
+      padding-left: 60em;
+
+    }
+    </style>
+</head>
+
+<body>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Topdeck Travels</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li id="home"><a href="/>Home</a></li>
+    </ul>
+  <ul class="nav navbar-right">
+    <li id="logout"><a href="/">Logout</a></li>
+  </ul>
+  </div>
+</nav>
+
+<div align="center">
+    <h1>BOOK YOUR TRAVEL</h1>
+    <select id="source" name="FROM" >
+        <option value="Halifax">Halifax</option>
+        <option value="Ottawa">Ottawa</option>
+        <option value="Alma">Alma</option>
+        <option value="Newfoundland">Newfoundland</option>
+        <option value="Cape Breton">Cape Breton</option>
+        <option value="Quebec City">Quebec City</option>
+        <option value="St. John's">St. John's</option>
+        <option value="Niagra Falls">Niagra Falls</option>
+        <option value="Dalvay by the sea">Dalvay by the sea</option>
+        <option value="Montreal">Montreal</option>
+        <option value="Vancouver">Vancouver</option>
+        <option value="Toronto">Toronto</option>
+        <option value="Gaspe">Gaspe</option>
+        <option value="Winnipeg">Winnipeg</option>
+        <option value="Vaughan">Vaughan</option>
+    </select>
+
+    <br><br>
+    <p>TO</p>
+    <h4 id="place"></h4>
+    <br>
+    <button id="prize" >GET PRICE</button>
+
+<!--    print after get Prize-->
+    <div class="center" id="after">
+    <b>Total Cost : <p id="displayprice"></p></b>
+    <br>
+    <label for ="email">Enter Email</label><br>
+    <input type="email" id="email"><br>
+     <br>
+        <label for="travel_date">Travel Date</label><br>
+     <input type="text" id="travel_date" placeholder="YYYY-MM-DD"><br>
+        <br>
+       <label for="travel_time">Travel Time</label><br>
+        <select id="travel_time">
+            <option value="6 AM">6 AM</option>
+            <option value="9 AM">9 AM</option>
+            <option value="12 PM">12 PM</option>
+            <option value="3 PM">3 PM</option>
+            <option value="6 PM">6 PM</option>
+            <option value="9 PM">9 PM</option>
+        </select>
+
+        <br>
+        <h3>PAYMENT INFORMATION</h3>
+         <p id="error"></p>
+    <label for="cardname">Name on Card</label><br>
+    <input type="text" id="cardname" required>
+    <br>
+    <label for="cardnumber">Card Number</label><br>
+    <input type="text" id="cardnumber" placeholder="xxxx-xxxx-xxxx-xxxx" required>
+    <br>
+    <label for="date">Expiration Date</label><br>
+    <input type="numbers" id="date" required placeholder="MM-YY">
+    <br>
+    <label for="cvc">Enter CVC</label><br>
+    <input id="cvc" type="number" placeholder="eg: 100" required>
+    <br><br>
+    <button id="pay">PAY</button>
+    </div>
+</div>
+
+<!--onclick price-->
+
+
+
+<script>
+    $('#after').hide();
+    function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+    }
+    var name_1 = getUrlVars()["name"];
+    var to_place1 = name_1.replace(/%20/g, ' ');
+    document.getElementById("place").innerHTML = to_place1;
+    var from_place1 = "Halifax";
+
+    var price;
+        $('#prize').click(function () {
+
+            $('#prize').hide();
+            $('#error').hide();                     //hide elements
+
+            var from_place1 = document.getElementById("source").value;
+            console.log(from_place1);
+
+            var auth = $.ajax({
+                url: 'http://topdeckTravelsLoadBalancer-49374090.us-east-1.elb.amazonaws.com:3003/booking/getPrices',
+                data: {'from_place':from_place1,'to_place':to_place1},
+                dataType: 'json',
+                type: 'POST',
+                async: false,
+                beforeSend: function (x) {
+                    if (x && x.overrideMimeType) {
+                        x.overrideMimeType("application/j-son;charset=UTF-8");
+                    }
+                },
+                success: function (response) {
+
+                },
+                error: function (response) {
+                }
+            });
+
+         // console.log(auth.responseJSON.price);
+         price = auth.responseJSON.price
+         document.getElementById("displayprice").innerHTML = price;
+
+         $('#after').show();
+         $('#error').hide();
+     });
+
+<!--for ticket generation and validate card-->
+
+     $('#pay').click( function () {
+          var travel_time = document.getElementById("travel_time").value;
+            console.log(from_place1);
+         var name = $('#cardname').val();
+         console.log("name",name);
+         var email = $('#email').val();
+         var travel_date = $('#travel_date').val();
+         console.log("travel",travel_date)
+         var card = $('#cardnumber').val();
+
+         var valid = $.ajax({
+             url: 'http://topdeckTravelsLoadBalancer-49374090.us-east-1.elb.amazonaws.com:3002/payment/validate',
+             data: {'cardNumber': card},          <!--insert ticket id-->
+             dataType: 'json',
+             type: 'POST',
+             async: false,
+             beforeSend: function (x) {
+                 if (x && x.overrideMimeType) {
+                     x.overrideMimeType("application/j-son;charset=UTF-8");
+                 }
+             },
+             success: function (response) {
+             },
+             error: function (error) {
+             }
+         });
+         message = valid.responseJSON.message;
+
+         if (message == "success") {
+             var r = $.ajax({
+                 url: 'http://topdeckTravelsLoadBalancer-49374090.us-east-1.elb.amazonaws.com:3002/booking/createBooking',
+                 data: {
+                     'name': name,
+                     'email': email,
+                     'travel_date': travel_date,
+                     'travel_time': travel_time,
+                     'from_place': from_place1,
+                     'to_place': to_place1,
+                     'fare': price
+                 },          <!--insert ticket id-->
+                 dataType: 'json',
+                 type: 'POST',
+                 async: false,
+                 beforeSend: function (x) {
+                     if (x && x.overrideMimeType) {
+                         x.overrideMimeType("application/j-son;charset=UTF-8");
+                     }
+                 },
+                 success: function (response) {
+                 },
+                 error: function (error) {
+                 }
+             });
+             console.log(r);
+             var id = r.responseJSON._id;
+             console.log(id);
+             window.location.replace("/ticket?id="+id);
+
+
+         }
+         else{
+             $('#error').show();
+             document.getElementById("error").innerHTML = "Wrong Details.";
+         }
+
+     });
+
+
+</script>
+
+<script>
+  function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+
+   function getUrlParam(parameter, defaultvalue){
+    var urlparameter = defaultvalue;
+    if(window.location.href.indexOf(parameter) > -1){
+        urlparameter = getUrlVars()[parameter];
+        }
+    return urlparameter;
+  }
+    var email = getUrlParam("email","empty");
+   console.log(email);
+  if(email!="empty")
+  {
+    $("#Login").hide();
+    $("#logout").show();
+
+  }
+  else {
+      $("#Login").show();
+      $("#logout").hide();
+  }
+
+// onclick logout
+
+  $('#logout').click( function () {;
+    var resp = $.ajax({
+        url: 'http://topdeckTravelsLoadBalancer-49374090.us-east-1.elb.amazonaws.com:3001/users/logout',
+        data: {'email':email},
+        dataType: 'json',
+        type: 'POST',
+        async: false,
+        beforeSend: function (x) {
+            if (x && x.overrideMimeType) {
+                x.overrideMimeType("application/j-son;charset=UTF-8");
+            }
+        },
+        success: function (response) {
+        },
+        error: function (error) {
+        }
+    });
+  });
+</script>
+
+<!--footer---------------------------------------------------------------------------------------->
+<footer class="page-footer font-small blue pt-4">
+  <a href="https://cloud5409topdeck.s3.amazonaws.com/app-debug.apk" align="center" ><img src="https://cloud5409topdeck.s3.amazonaws.com/photo/download.svg" id="downloadapp" align="center"></a>
+</footer>
+
+<!------------------------------------------------------------------------------------------------>
+</body>
+</html>

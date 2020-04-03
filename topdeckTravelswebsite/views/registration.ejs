@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="UTF-8">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<!--    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">-->
+<!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
+<!--  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>-->
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/** {*/
+/*  box-sizing: border-box;*/
+/*}*/
+
+/* Add padding to containers */
+.container {
+  padding: 16px;
+  background-color: white;
+}
+
+ /*Full-width input fields */
+input[type=text],input[type=email], input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus,input[type=email]:focus, input[type=password]:focus{
+  background-color: #ddd;
+  outline: none;
+}
+
+ /*Overwrite default styles of hr */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for the submit button */
+#register, .cancelbtn  {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 20%;
+  opacity: 0.9;
+}
+
+#register:hover {
+
+  opacity: 1;
+}
+
+/* Add a blue text color to links */
+a {
+  color: dodgerblue;
+}
+
+/* Set a grey background color and center the text of the "sign in" section */
+.signin {
+  background-color: #f1f1f1;
+  text-align: center;
+}
+</style>
+
+</head>
+<body>
+
+  <div class="container">
+      <div class="center">
+    <h1>Register</h1>
+    <p>Please fill in this form to create an account.</p>
+    <hr>
+          <p id="error"></p>
+      <label for="name"><b>Name</b></label>
+    <input type="text" placeholder="Enter Name" id="name" name="name" required>
+
+    <label for="email_text"><b>Email</b></label>
+    <input type="email" placeholder="Enter Email" name="email" id="email_text" required>
+<br>
+    <label for="psw"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="psw"  id="psw" required>
+
+     <label for="securityQuestion"><b>Choose security question  :</b></label>
+    <select id="securityQuestion" name="securityQuestion">
+        <option value="What Is your favorite book?" >What Is your favorite book?</option>
+        <option value="What is the name of the road you grew up on?">What is the name of the road you grew up on?</option>
+        <option value="What is your mother’s maiden name?">What is your mother’s maiden name?</option>
+        <option value="What was the name of your first/current/favorite pet?">What was the name of your first/current/favorite pet?</option>
+        <option value="What was the first company that you worked for?">What was the first company that you worked for?</option>
+         <option value="Where did you meet your spouse?">Where did you meet your spouse?</option>
+         <option value="Where did you go to high school/college?">Where did you go to high school/college?</option>
+         <option value="What is your favorite food?">What is your favorite food?</option>
+         <option value="What city were you born in?">What city were you born in?</option>
+         <option value="Where is your favorite place to vacation?">Where is your favorite place to vacation?</option>
+</select>
+          <br>
+    <label for="answer">Answer:</label><br>
+    <input type="text" id="answer" placeholder="Enter Answer" name="answer" required>
+
+      <hr>
+    <button type="button"  id="register">Register</button>
+    <button onclick="window.location.href = '/'" class="cancelbtn" >Cancel</button>
+      </div>
+  </div>
+
+  <div class="container signin">
+    <p>Already have an account? <a href="/login">Sign in</a>.</p>
+  </div>
+
+
+<script>
+
+
+    // var question = document.getElementById("securityQuestion");
+    // var op = $('.notifications-dropdown option:selected').val();
+    var squestion = $('#securityQuestion :selected').text();
+    var answer = $('#answer').val();
+    var email =$('#email_text').val();
+    var password = $('#psw').val();
+    var name = $('#name').val();
+    $('#register').click(function () {
+
+
+        var squestion = document.getElementById("securityQuestion").value;
+        var squestion = $('#securityQuestion :selected').text();
+        var answer = $('#answer').val();
+        // var email =$('#email_text').val();
+        var password = $('#psw').val();
+        var name = $('#name').val();
+        var email =$('#email_text').val();
+        var resp = $.ajax({
+            url: 'http://topdeckTravelsLoadBalancer-49374090.us-east-1.elb.amazonaws.com:3001/users/register',
+            data: {'name': name, 'email': email, 'password': password, 'securityQuestion': squestion, 'answer': answer},
+            dataType: 'json',
+            type: 'POST',
+            async: false,
+            beforeSend: function (x) {
+                if (x && x.overrideMimeType) {
+                    x.overrideMimeType("application/j-son;charset=UTF-8");
+                }
+            },
+            success: function (response) {
+            },
+            error: function (error) {
+            }
+        });
+        console.log(resp.responseJSON);
+        var resp = resp.responseJSON;
+        if(resp.message == "User registered successfully"){
+            window.location.replace("/?email="+email);
+        }
+        else{
+            document.getElementById("error").innerHTML="Enter Data Correctly";
+        }
+
+    });
+
+</script>
+
+</body>
+</html>
