@@ -159,7 +159,8 @@ a {
             error: function (error) {
             }
         });
-        console.log(resp.responseJSON);
+        console.log(resp.responseJSON.message);
+        window.alert(resp.responseJSON.message);
         var resp = resp.responseJSON;
         if(resp.message == "User registered successfully"){
             window.location.replace("/?email="+email);

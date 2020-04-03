@@ -212,9 +212,12 @@ $('#loginbutton').click( function () {
         error: function (error) {
         }
     });
+    var msg = resp.responseJSON.message;
+    if(msg == "Username or password is incorrect"){
+      window.alert(resp.responseJSON.message);
+      window.location.replace("/login");
 
-
-    console.log(resp.responseJSON.email);
+    }
     if (resp.responseJSON.length!=0) {
          var question = resp.responseJSON.securityQuestion;
          document.getElementById('securityQuestion').innerHTML = question;
@@ -241,8 +244,7 @@ $('#loginbutton').click( function () {
                 error: function (response) {
                 }
             });
-
-            console.log(resp.responseJSON.email);
+            console.log(auth.responseJSON.message);
 
 
             if (auth.responseJSON.length!=0) {
