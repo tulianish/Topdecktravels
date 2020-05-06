@@ -17,7 +17,7 @@ A cloud-travel application built as part of CSCI 5409 - Advanced Cloud Computing
 
 ### Containerisation :
 
-* Docker : [Docker Image](https://hub.docker.com/repository/docker/tulianish/topdecktravels )
+* Docker : [Docker Image Repository for services](https://hub.docker.com/repository/docker/tulianish/topdecktravels )
 
 ### Hosting :
 
