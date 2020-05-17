@@ -1,0 +1,51 @@
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="60dp"
+    android:paddingRight="60dp"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_marginBottom="20dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:layout_gravity="center"
+        android:contextClickable="true"
+        android:focusable="true"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/lout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="50dp"
+        android:paddingTop="50dp"
+        android:background="#009a9a"
+        android:gravity="center"
+        android:letterSpacing="0.2"
+        android:padding="16dp"
+        android:text="Logout"
+        android:textColor="#d9e5f3"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="50dp"
+        android:paddingTop="50dp"
+        android:background="#009a9a"
+        android:gravity="center"
+        android:letterSpacing="0.2"
+        android:padding="16dp"
+        android:text="Delete Account"
+        android:textColor="#d9e5f3"
+        android:textStyle="bold" />
+
+
+</LinearLayout>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PlaceActivity">
+    <LinearLayout
+        android:id="@+id/imageLayout"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/cardPlaceImg"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"/>
+
+        <LinearLayout
+            android:id="@+id/nameLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/placeName"
+                android:layout_width="fill_parent"
+                android:layout_height="105dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="9pt"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/imageLayout"
+                android:text="TEST" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/addressLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/placeAddress"
+                android:layout_width="fill_parent"
+                android:layout_height="105dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="9pt"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/nameLayout"
+                android:text="TEST" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/openStatusLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/openStatus"
+                android:layout_width="fill_parent"
+                android:layout_height="105dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="9pt"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/addressLayout"
+                android:text="TEST" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bookBtnLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+            <Button
+                android:id="@+id/bookBtn"
+                android:layout_width="fill_parent"
+                android:layout_height="105dp"
+                android:textColor="#d9e5f3"
+                android:textSize="9pt"
+                android:background="#009a9a"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/openStatusLayout"
+                android:text="TEST" />
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>
